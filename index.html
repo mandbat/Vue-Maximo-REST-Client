@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vue Maximo Client (CDN Installation)</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="app">
+        <div v-bind:class="msgClass">
+            {{message}}
+        </div>
+
+        <div class="button">
+            <button style="font-size: 24px; color: rgb(11, 100, 26); background: rgba(82, 255, 96, 0.295);" v-on:click="getDataFromMXServer">Get Workorder data from MXSERVER</button>
+            <button style="font-size: 24px; color: rgb(141, 17, 17); background: rgba(255, 156, 156, 0.534);" v-on:click="cleanTable">Clean table</button>
+        </div>
+
+        <br>
+        <div>
+            <table v-if="wo_urls">
+                <thead>
+                    <tr>
+                        <th>##</th>
+                        <th>Workorder #</th>
+                        <th>Site</th>
+                        <th>Status</th>
+                        <th>Status date</th>
+                        <th>REST URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(wo,i) in wo_urls">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ wo.wonum }}</td>
+                        <td>{{ wo.siteid }}</td>
+                        <td>{{ wo.status }}</td>
+                        <td>{{ wo.statusdate }}</td>
+                        <td>{{ wo.href }}</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: "Reading data...",
+                msgClass: "msg0",
+                doRequest: false,
+                wo_urls: undefined,
+            },
+            methods: {
+                async getDataFromMXServer() {
+
+                    this.wo_urls = undefined;
+
+                    this.msgClass = "msg1";
+                    this.message = "Reading data...";
+
+                    console.log("getDataFromMXServer()...")
+
+                    var url = "http://73.160.118.148/maximo/oslc/os/mxworest/"
+                    var user = 'maxadmin'
+                    var pwd = 'maxadmin'
+
+                    var decodedStringBtoA = user + ':' + pwd
+                    var encodedStringBtoA = btoa(decodedStringBtoA);
+
+                    console.log('url     : ' + url);
+                    console.log('maxauth : ' + encodedStringBtoA);
+
+                    const data = {
+                        lean: 1,
+                        'oslc.pageSize': 10,
+                    }
+
+                    var result = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/x-www-form-urlencoded',
+                            'maxauth': encodedStringBtoA
+                        },
+                        body: new URLSearchParams(data).toString(),
+                    }).then(response => response.json());
+
+                    var members_href = [];
+                    for (const rec of result.member) {
+                        const woMbo = await fetch(rec.href, {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/x-www-form-urlencoded',
+                                'maxauth': encodedStringBtoA
+                            },
+                            body: new URLSearchParams(data).toString(),
+                        }).then(response => response.json());
+
+                        console.log(woMbo.wonum);
+
+                        members_href.push({
+                            href: rec.href,
+                            wonum: woMbo.wonum,
+                            siteid: woMbo.siteid,
+                            status: woMbo.status,
+                            statusdate: woMbo.statusdate
+
+                        });
+                    }
+                    console.log(members_href);
+                    this.wo_urls = members_href;
+
+                    this.message = "Data has been fetched. Records count: " + members_href.length
+
+                    console.log("END FINAL");
+
+                },
+                cleanTable() {
+                    this.wo_urls = undefined;
+                    this.msgClass = "msg2";
+                    this.message = "Data has been erased"
+                }
+
+
+            },
+
+            created() {
+                console.log("created()...");
+                this.getDataFromMXServer();
+                return true;
+            },
+        })
+    </script>
+</body>
+
+</html>

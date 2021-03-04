@@ -1,0 +1,53 @@
+.msg0 {
+    font-size: 34px;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    color: blue;
+}
+
+.msg1 {
+    font-size: 34px;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    color: green;
+}
+
+.msg2 {
+    font-size: 34px;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    color: red;
+}
+
+.button {
+    padding: 1em;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+thead {
+    background-color: #0049cf7c;
+}
+
+th {
+    border: 1px solid #0011ffe3;
+    text-align: left;
+    padding: 8px;
+    font-weight: lighter;
+    font-weight: bold;
+}
+
+td {
+    border: 1px solid #002d81;
+    text-align: left;
+    padding: 8px;
+    font-weight: lighter;
+}
+
+tr:nth-child(even) {
+    background-color: #0051e72a;
+}
