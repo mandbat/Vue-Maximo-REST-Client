@@ -56,17 +56,17 @@ table {
     box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2);
 }
 
-.close {
+.red_text {
     color: red;
     font-weight: bold;
 }
 
-.appr {
+.green_text {
     color: green;
     font-weight: bold;
 }
 
-.wappr {
+.yellow_text {
     color: rgba(252, 185, 0, 0.788);
     font-weight: bold;
 }

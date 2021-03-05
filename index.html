@@ -37,7 +37,12 @@
                         <td>{{ i + 1 }}</td>
                         <td>{{ wo.wonum }}</td>
                         <td>{{ wo.siteid }}</td>
-                        <td :class="wo.status.toLowerCase()">{{ wo.status }}</td>
+                        <td :class="{
+                            'red_text': wo.status === 'CLOSE', 
+                            'green_text': wo.status === 'APPR', 
+                            'yellow_text': wo.status === 'WAPPR'}">
+                            {{ wo.status }}
+                        </td>
                         <td>{{ wo.statusdate }}</td>
                         <td>{{ wo.href }}</td>
                     </tr>
