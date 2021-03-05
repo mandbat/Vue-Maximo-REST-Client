@@ -35,7 +35,9 @@
                 <tbody>
                     <tr v-for="(wo,i) in wo_urls">
                         <td>{{ i + 1 }}</td>
-                        <td>{{ wo.wonum }}</td>
+
+                        <td :class="getClass1(wo.wonum)">{{ wo.wonum }}</td>
+
                         <td>{{ wo.siteid }}</td>
                         <td :class="{
                             'red_text': wo.status === 'CLOSE', 
@@ -62,6 +64,10 @@
                 recordsLimit: 10
             },
             methods: {
+                getClass1(wonum) {
+                    if (wonum === '1005')
+                        return 'red_text';
+                },
                 async getDataFromMXServer() {
 
                     this.wo_urls = undefined;
