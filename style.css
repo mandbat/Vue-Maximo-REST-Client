@@ -23,12 +23,6 @@
     padding: 1em;
 }
 
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-
 thead {
     background-color: #0049cf7c;
 }
@@ -45,9 +39,34 @@ td {
     border: 1px solid #002d81;
     text-align: left;
     padding: 8px;
-    font-weight: lighter;
 }
 
 tr:nth-child(even) {
     background-color: #0051e72a;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-wrapper {
+    font-family: arial, sans-serif;
+    margin: 10px 70px 70px;
+    box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2);
+}
+
+.close {
+    color: red;
+    font-weight: bold;
+}
+
+.appr {
+    color: green;
+    font-weight: bold;
+}
+
+.wappr {
+    color: rgba(252, 185, 0, 0.788);
+    font-weight: bold;
 }
