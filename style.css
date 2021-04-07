@@ -70,3 +70,12 @@ table {
     color: rgba(252, 185, 0, 0.788);
     font-weight: bold;
 }
+
+.bold {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.blue {
+    color: blue;
+}

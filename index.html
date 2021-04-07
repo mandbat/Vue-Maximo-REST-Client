@@ -36,7 +36,7 @@
                     <tr v-for="(wo,i) in wo_urls">
                         <td>{{ i + 1 }}</td>
 
-                        <td :class="getClass1(wo.wonum)">{{ wo.wonum }}</td>
+                        <td :class="getClass1(wo)">{{ wo.wonum }}</td>
 
                         <td>{{ wo.siteid }}</td>
                         <td :class="{
@@ -64,9 +64,11 @@
                 recordsLimit: 10
             },
             methods: {
-                getClass1(wonum) {
-                    if (wonum === '1005')
-                        return 'red_text';
+                getClass1(wo) {
+                    return {
+                        bold: ['7551', '7185'].includes(wo.wonum),
+                        blue: ['7551', '3432'].includes(wo.wonum)
+                    }
                 },
                 async getDataFromMXServer() {
 
